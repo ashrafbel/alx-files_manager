@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import redisClient from '../utils/redis';
 import dbClient from '../utils/db';
 
@@ -21,7 +22,7 @@ class UsersController {
       return res.status(400).json({ error: 'Already exist' });
     }
 
-    const hashedPassword = sha1(password);
+    const hashedPassword = crypto.createHash('sha1').update(password).digest('hex');
 
     const newUser = {
       email,
